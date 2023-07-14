@@ -9,8 +9,8 @@ export type ILoginUserResponse = {
   accessToken: string;
   refreshToken?: string;
   logInUserRole?: string;
+  userDetails?: object | null;
   email?: string;
-  name?: string | undefined;
 };
 
 export type IRefreshTokenResponse = {

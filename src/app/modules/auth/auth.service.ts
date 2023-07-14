@@ -22,38 +22,35 @@ const loginStudent = async (
 
   const user = await User.isUserExist(email);
 
-  let userRole;
+  const userDetails = await User.findOne({ email });
 
   if (!user) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'User does not exist');
   }
-
   let isPasswordMatched = false;
-
   if (user) {
     isPasswordMatched = await User.isPasswordMatched(password, user.password);
   }
-
   if (!isPasswordMatched) {
     throw new ApiError(StatusCodes.UNAUTHORIZED, 'Password is incorrect');
   }
 
   // Generate an access token
   const accessToken = jwtHelpers.createToken(
-    { email, userRole },
+    { email, userDetails },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
   const refreshToken = jwtHelpers.createToken(
-    { email, userRole },
+    { email, userDetails },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string
   );
 
   // Return the response object
   return {
-    logInUserRole: userRole,
     email,
+    userDetails,
     accessToken,
     refreshToken,
   };
