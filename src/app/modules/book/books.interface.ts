@@ -1,9 +1,17 @@
 import { Model } from 'mongoose';
 
+
+export type IReview = {
+  title?: string;
+  rating?: number;
+  writtenBy?: string;
+  date?: Date;
+}
+
 export type IBook = {
   id: string;
   title: string;
-  bookDescription: string;
+  bookDescription?: string;
   author: string;
   genre: string;
   year: string;
@@ -11,9 +19,10 @@ export type IBook = {
   price: number;
   bookImage?: string;
   rating?: number;
+  review?:IReview
 };
 
-//! 9fields
+
 
 export type BookModel = Model<IBook>;
 

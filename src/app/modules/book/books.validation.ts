@@ -8,9 +8,6 @@ const createBookZodSchema = z.object({
     year: z.string({
       required_error: 'Year is required ',
     }),
-    price: z.number({
-      required_error: 'Price is required ',
-    }),
     genre: z.string({
       required_error: 'Genre is required ',
     }),
@@ -22,13 +19,7 @@ const createBookZodSchema = z.object({
     author: z.string({
       required_error: 'Author is required ',
     }),
-    rating: z.number({
-      required_error: 'Rating is required ',
-    }),
-    bookImage: z.string({}).optional(),
-    publicationDate: z.string({
-      required_error: 'PublicationDate is required ',
-    }),
+
   }),
 });
 

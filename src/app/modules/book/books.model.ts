@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { ApiError } from '../../../handlingError/ApiError';
 import { BookModel, IBook } from './books.interface';
 
 const bookSchema = new Schema<IBook>(
@@ -42,6 +43,9 @@ const bookSchema = new Schema<IBook>(
     rating: {
       type: Number,
     },
+    review: {
+      type: Array,
+    },
   },
   {
     timestamps: true,
@@ -51,7 +55,7 @@ const bookSchema = new Schema<IBook>(
 bookSchema.pre('save', async function (next) {
   const existingBook = await Book.findOne({ title: this.title });
   if (existingBook) {
-    throw new Error('This book is already Exist!!!');
+    throw new ApiError(409, 'This book is already Exist!!!');
   }
   next();
 });

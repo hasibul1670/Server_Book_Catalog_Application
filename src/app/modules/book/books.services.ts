@@ -1,10 +1,11 @@
 import { buildWhereConditions } from '../../../helpers/buildWhereCondition';
 import { generateBookId } from '../../../helpers/generateId';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { formatDate } from '../../../helpers/timeDateFormater';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { bookSearchableFields } from './books.constant';
-import { IBook, IbookFilters } from './books.interface';
+import { IBook, IReview, IbookFilters } from './books.interface';
 import { Book } from './books.model';
 
 const createBook = async (payload: IBook): Promise<IBook> => {
@@ -47,7 +48,6 @@ const getAllBooks = async (
     data: result,
   };
 };
-
 const getSingleBook = async (id: string) => {
   const result = await Book.find({ id: id });
   return result;
@@ -67,9 +67,29 @@ const updateBook = async (
   });
   return result;
 };
+const addBookReview = async (
+  id: string,
+  payload: Partial<IReview>
+): Promise<IReview | null> => {
+  const today = new Date();
+  const options = {
+    $push: {
+      review: {
+        title: payload.title,
+        writtenBy: payload.writtenBy,
+        date: formatDate(today),
+      },
+    },
+  };
+  const result = await Book.findOneAndUpdate({ id: id }, options, {
+    new: true,
+  });
+  return result;
+};
 
 export const BookService = {
   createBook,
+  addBookReview,
   deleteBook,
   getAllBooks,
   getSingleBook,

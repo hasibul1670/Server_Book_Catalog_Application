@@ -19,8 +19,12 @@ router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), bookController.deleteBook);
 router.patch(
   '/:id',
   validateRequest(BookValidation.updateBookZodSchema),
-  auth(ENUM_USER_ROLE.ADMIN),
+ 
   bookController.updateBook
+);
+router.post(
+  '/review/:id',
+  bookController.addBookReview
 );
 
 router.get('/', bookController.getAllBook);
