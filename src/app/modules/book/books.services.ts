@@ -1,3 +1,4 @@
+import { ApiError } from '../../../handlingError/ApiError';
 import { buildWhereConditions } from '../../../helpers/buildWhereCondition';
 import { generateBookId } from '../../../helpers/generateId';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
@@ -50,23 +51,35 @@ const getAllBooks = async (
 };
 const getSingleBook = async (id: string) => {
   const result = await Book.find({ id: id });
-  return result;
+
+  if (result === null) {
+    throw new ApiError(404, 'Book not found');
+  } else {
+    return result;
+  }
 };
 
 const deleteBook = async (id: string) => {
   const result = await Book.findOneAndDelete({ id: id });
-
   return result;
 };
+
 const updateBook = async (
   id: string,
   payload: Partial<IBook>
 ): Promise<IBook | null> => {
-  const result = await Book.findOneAndUpdate({ _id: id }, payload, {
+  const today = new Date();
+  const options = {
+    ...payload,
+    lastUpdateTime: formatDate(today),
+  };
+
+  const result = await Book.findOneAndUpdate({ id: id }, options, {
     new: true,
   });
   return result;
 };
+
 const addBookReview = async (
   id: string,
   payload: Partial<IReview>

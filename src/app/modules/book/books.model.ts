@@ -43,6 +43,12 @@ const bookSchema = new Schema<IBook>(
     addedBy: {
       type: String,
     },
+    editedBy: {
+      type: String,
+    },
+    lastUpdateTime: {
+      type: String,
+    },
     rating: {
       type: Number,
     },

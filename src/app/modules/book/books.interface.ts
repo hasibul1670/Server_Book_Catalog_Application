@@ -1,12 +1,11 @@
 import { Model } from 'mongoose';
 
-
 export type IReview = {
   title?: string;
   rating?: number;
   writtenBy?: string;
   date?: Date;
-}
+};
 
 export type IBook = {
   id: string;
@@ -19,11 +18,11 @@ export type IBook = {
   price: number;
   bookImage?: string;
   rating?: number;
-  review?:IReview
+  review?: IReview;
   addedBy?: string;
+  editedBy?: string;
+  lastUpdateTime?: string;
 };
-
-
 
 export type BookModel = Model<IBook>;
 

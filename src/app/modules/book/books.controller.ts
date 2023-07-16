@@ -34,7 +34,7 @@ const getAllBook = catchAsync(async (req: Request, res: Response) => {
 const deleteBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const result = await BookService.deleteBook(id);
-  sendBookResponse(res, ' book Deleted successfully !', result);
+  sendBookResponse(res, 'This Book Deleted successfully !', result);
 });
 const getSingleBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -45,7 +45,7 @@ const updateBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const UpdateData = req.body;
   const result = await BookService.updateBook(id, UpdateData);
-  sendBookResponse(res, 'book Data Is Updated successfully!', result);
+  sendBookResponse(res, 'Book Data Is Updated successfully!', result);
 });
 const addBookReview = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
