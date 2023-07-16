@@ -10,9 +10,26 @@ import { IBook, IReview, IbookFilters } from './books.interface';
 import { Book } from './books.model';
 
 const createBook = async (payload: IBook): Promise<IBook> => {
-  const BookId = await generateBookId();
-  const BookPayload: IBook = { ...payload, id: BookId };
-  const result = await Book.create(BookPayload);
+  const bookId = await generateBookId();
+  //const BookPayload: IBook = { ...payload, id: BookId };
+  const images = [
+    'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1616514130l/55145261.jpg',
+    'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1601937850l/54814676.jpg',
+    'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618913179l/54985743.jpg',
+    'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1602570691l/53138095.jpg',
+    'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1628625865l/58745185._SY475_.jpg',
+  ];
+
+  const randomIndex = Math.floor(Math.random() * images.length);
+  const randomImage = images[randomIndex];
+
+  const bookPayload: IBook = {
+    ...payload,
+    id: bookId,
+    bookImage: payload.bookImage || randomImage,
+  };
+
+  const result = await Book.create(bookPayload);
   return result;
 };
 
@@ -20,7 +37,7 @@ const getAllBooks = async (
   filters: IbookFilters,
   paginationOptions: IPaginationOptions
 ): Promise<IGenericResponse<IBook[]>> => {
-  const { limit, page, skip, sortBy, sortOrder } =
+  const {page, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
 
   const { searchTerm, ...filtersData } = filters;
@@ -36,14 +53,13 @@ const getAllBooks = async (
   const result = await Book.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
-    .limit(limit);
+ 
 
   const total = await Book.countDocuments();
 
   return {
     meta: {
       page,
-      limit,
       total,
     },
     data: result,
