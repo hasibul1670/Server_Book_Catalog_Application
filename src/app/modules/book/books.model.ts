@@ -52,6 +52,10 @@ const bookSchema = new Schema<IBook>(
     rating: {
       type: Number,
     },
+    finishedReading: {
+      type: Boolean,
+      default: false,
+    },
     review: {
       type: Array,
     },

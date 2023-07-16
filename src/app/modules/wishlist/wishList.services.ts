@@ -1,10 +1,10 @@
-import { IWishList } from "./wishList.interface";
-import { WishList } from "./wishList.model";
-
-;
+import { IWishList } from './wishList.interface';
+import { WishList } from './wishList.model';
 
 const createWishList = async (payload: IWishList): Promise<IWishList> => {
   const WishListPayload: IWishList = { ...payload };
+  const email = payload.email;
+  await WishList.deleteOne({ email });
   const result = await WishList.create(WishListPayload);
   return result;
 };
@@ -13,7 +13,6 @@ const getAllWishLists = async (email: string) => {
   const result = await WishList.find({ email: email }).populate('book');
   return result;
 };
-
 
 const deleteWishList = async (id: string) => {
   const result = await WishList.findByIdAndDelete(id);

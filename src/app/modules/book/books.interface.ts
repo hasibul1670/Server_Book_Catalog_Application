@@ -22,6 +22,7 @@ export type IBook = {
   addedBy?: string;
   editedBy?: string;
   lastUpdateTime?: string;
+  finishedReading?:boolean;
 };
 
 export type BookModel = Model<IBook>;
