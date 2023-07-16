@@ -40,6 +40,9 @@ const bookSchema = new Schema<IBook>(
     bookImage: {
       type: String,
     },
+    addedBy: {
+      type: String,
+    },
     rating: {
       type: Number,
     },

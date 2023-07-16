@@ -20,6 +20,7 @@ export type IBook = {
   bookImage?: string;
   rating?: number;
   review?:IReview
+  addedBy?: string;
 };
 
 
