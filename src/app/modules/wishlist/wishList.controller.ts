@@ -5,7 +5,6 @@ import sendReponse from '../../../shared/sendResponse';
 import { IWishList } from './wishList.interface';
 import { WishListService } from './wishList.services';
 
-
 const sendWishListResponse = (res: Response, message: string, data: any) => {
   sendReponse<IWishList>(res, {
     statusCode: StatusCodes.OK,
@@ -28,16 +27,14 @@ const getAllWishLists = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteWishList = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const result = await WishListService.deleteWishList(id);
+  const { email, wishlistItemId } = req.body;
+  const result = await WishListService.deleteWishList(email, wishlistItemId);
   sendWishListResponse(res, ' WishList Deleted successfully !', result);
 });
 
-
 const updateWishList = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const UpdateData = req.body;
-  const result = await WishListService.updateWishList(id, UpdateData);
+
+  const result = await WishListService.updateWishList(req.body);
   sendWishListResponse(res, 'WishList Data Is Updated successfully!', result);
 });
 

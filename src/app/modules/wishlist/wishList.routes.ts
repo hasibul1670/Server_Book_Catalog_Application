@@ -8,7 +8,7 @@ router.post(
   WishListController.createWishList
 );
 router.get('/:email', WishListController.getAllWishLists);
-router.delete('/:id', WishListController.deleteWishList);
-router.patch('/:id', WishListController.updateWishList);
+router.delete('/', WishListController.deleteWishList);
+router.patch('/', WishListController.updateWishList);
 
 export const WishListRoutes = router;
